@@ -9,6 +9,7 @@ const KioscoProvider = ({children}) => {
     const [categoriaActual, setCategoriaActual] = useState({});
     const [producto, setProducto] = useState({});
     const [modal, setModal] = useState(false);
+    const [carrito, setCarrito] = useState([]);
 
     const getCategorias = async () => {
         const { data } = await axios.get('/api/categorias');
@@ -36,16 +37,30 @@ const KioscoProvider = ({children}) => {
         setModal(!modal);
     };
 
+    const handleClickAgregarCarrito = (producto) => {
+        if(carrito.some(p => p.id === producto.id)) {
+            // Actualiza la cantidad del producto
+            const productoActual = carrito.map(productoState => productoState.id === producto.id ? producto : productoState);
+            setCarrito(productoActual);
+        } else {
+            setCarrito([ ...carrito, producto ]);
+        }
+
+        setModal(false);
+    };
+
     return (
         <KioscoContext.Provider
             value={{
                 categorias,
                 producto,
                 modal,
+                carrito,
                 categoriaActual,
                 handleClickCategoria,
                 handleSetProducto,
-                handleSetModal
+                handleSetModal,
+                handleClickAgregarCarrito
             }}
         >
             {children}

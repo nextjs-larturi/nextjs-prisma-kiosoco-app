@@ -1,10 +1,28 @@
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import useKiosco from "../hooks/useKiosco";
 import { formatearMoneda } from '../helpers'
 
 const ModalProducto = () => {
 
-  const { producto, handleSetModal } = useKiosco();
+  const { producto, carrito, handleSetModal, handleClickAgregarCarrito } = useKiosco();
+
+  const [cantidad, setCantidad] = useState(1);
+  const [edicion, setEdicion] = useState(false);
+
+  const handleClickCantidad = (cantidad) => {
+    if(cantidad === 0 || cantidad > 5) return;
+    setCantidad(cantidad);
+  };
+
+  useEffect(() => {
+    // Compruebo si el producto esta en el carrito
+    if (carrito.some(p => p.id === producto.id)) {
+        const productoEdicion = carrito.find(p => p.id === producto.id);
+        setEdicion(true);
+        setCantidad(productoEdicion.cantidad);
+    }
+  }, [producto, carrito]);
 
   return (
     <div className="md:flex gap-10">
@@ -32,8 +50,37 @@ const ModalProducto = () => {
             <p className="mt-5 font-black text-5xl text-amber-500">
                 {formatearMoneda(producto.precio)}
             </p>
-        </div>
 
+            {/* Botonera */}
+            <div className="flex gap-4 mt-5">
+                <button
+                    type="button"
+                    onClick={() => handleClickCantidad(cantidad - 1)}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </button>
+
+                <p className="text-3xl">{cantidad}</p>
+
+                <button
+                    type="button"
+                    onClick={() => handleClickCantidad(cantidad + 1)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </button>
+            </div>
+
+            <button
+                type="button"
+                className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mt-5 uppercase"
+                onClick={() => handleClickAgregarCarrito({ ...producto, cantidad })}
+            >
+                { edicion ? 'Editar cantidad' : 'Agregar al carrito' }
+            </button>
+        </div>
     </div>
   )
 }
