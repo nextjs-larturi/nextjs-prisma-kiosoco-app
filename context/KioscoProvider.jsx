@@ -84,7 +84,6 @@ const KioscoProvider = ({ children }) => {
    const colocarOrden = async (e) => {
       e.preventDefault();
 
-      console.log(111);
       try {
          const { data } = await axios.post('/api/ordenes', {
             pedido: carrito,
@@ -93,7 +92,16 @@ const KioscoProvider = ({ children }) => {
             fecha: Date.now().toString(),
          });
 
-         console.log(data);
+         // Reinicio el state
+         setCategoriaActual(categorias[0]);
+         setCarrito([]);
+         setNombre('');
+         setTotal(0);
+
+         toast.success('Orden enviada');
+         setTimeout(() => {
+            router.push('/');
+         }, 2000);
       } catch (error) {
          console.error(error);
       }

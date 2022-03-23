@@ -1,54 +1,52 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 const pasos = [
-    { paso: 1, nombre: 'Menú', url: '/' },
-    { paso: 2, nombre: 'Resumen', url: '/resumen' },
-    { paso: 3, nombre: 'Datos y Total', url: '/total' },
+   { paso: 1, nombre: 'Menú', url: '/' },
+   { paso: 2, nombre: 'Resumen', url: '/resumen' },
+   { paso: 3, nombre: 'Datos y Total', url: '/total' },
 ];
 
 const Pasos = () => {
-    const router = useRouter();
+   const router = useRouter();
 
-    const calcularProgreso = () => {
-        let valor;
+   const calcularProgreso = () => {
+      let valor;
 
-        if(router.pathname === '/') {
-            valor = 7;
-        } else if(router.pathname === '/resumen') {
-            valor = 47;
-        } else if(router.pathname === '/total') {
-            valor = 100;
-        }
+      if (router.pathname === '/') {
+         valor = 7;
+      } else if (router.pathname === '/resumen') {
+         valor = 47;
+      } else if (router.pathname === '/total') {
+         valor = 100;
+      }
 
-        return valor;
-    }
+      return valor;
+   };
 
-    return (
-        <>
-            <div className="flex justify-between mb-5">
-                {pasos.map(paso => (
-                    <button 
-                        key={paso.paso}
-                        className="text-2xl font-bold text-gray-800 mr-2"
-                        onClick={() => {
-                            router.push(paso.url);
-                        }}
-                    >
-                        {paso.nombre}
-                    </button>
-                ))}
-            </div>
+   return (
+      <>
+         <div className='flex justify-between mb-5'>
+            {pasos.map((paso) => (
+               <button
+                  key={paso.paso}
+                  className='font-bold text-gray-800 mr-2 text-sm md:text-lg lg:text-xl'
+                  onClick={() => {
+                     router.push(paso.url);
+                  }}
+               >
+                  {paso.nombre}
+               </button>
+            ))}
+         </div>
 
-            <div className="bg-gray-100 mb-10">
-                <div 
-                    className="rounded-full bg-amber-500 text-xs leading-none h-2 text-center text-white w-10"
-                    style={{ width: `${calcularProgreso()}%` }}
-                >
-
-                </div>
-            </div>
-        </>
-    )
+         <div className='bg-gray-100 mb-10'>
+            <div
+               className='rounded-full bg-amber-500 text-xs leading-none h-2 text-center text-white w-10'
+               style={{ width: `${calcularProgreso()}%` }}
+            ></div>
+         </div>
+      </>
+   );
 };
 
 export default Pasos;
