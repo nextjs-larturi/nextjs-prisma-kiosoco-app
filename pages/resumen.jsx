@@ -1,7 +1,7 @@
 
-import Layout from "../layout/Layout";
 import useKiosco from "../hooks/useKiosco";
 import ResumenProducto from "../components/ResumenProducto";
+import Layout from "../components/Layout";
 
 export default function Resumen() {
 

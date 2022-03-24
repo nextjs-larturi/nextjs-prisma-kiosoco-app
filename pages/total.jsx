@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import useKiosco from '../hooks/useKiosco';
-import Layout from '../layout/Layout';
 import { formatearMoneda } from '../helpers';
+import Layout from '../components/Layout';
 
 export default function Total() {
    const { carrito, nombre, total, setNombre, colocarOrden } = useKiosco();

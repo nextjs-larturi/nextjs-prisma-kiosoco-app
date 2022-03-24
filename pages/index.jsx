@@ -1,6 +1,6 @@
 import useKiosco from "../hooks/useKiosco";
 import Producto from "../components/Producto";
-import Layout from "../layout/Layout";
+import Layout from "../components/Layout";
 
 export default function Home() {
 
