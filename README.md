@@ -1,5 +1,7 @@
 # Next Prisma Kiosco App
 
+- Next 12.1.0
+
 ## Tienda online con carrito
 
 ### 🚀 Quick start
